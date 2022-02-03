@@ -1,0 +1,53 @@
+{
+  "type": "network",
+  "version": "1.0",
+  "data": "data.json",
+  "logo": {
+    "file": "",
+    "link": "",
+    "text": "Arcprotorp"
+  },
+  "text": {
+    "more": "",
+    "intro": "Big Room Planning OKR demo",
+    "title": "OKR_demo"
+  },
+  "legend": {
+    "edgeLabel": "collab comments",
+    "colorLabel": "entity type",
+    "nodeLabel": "entities"
+  },
+  "features": {
+    "search": true,
+    "groupSelectorAttribute": false,
+    "hoverBehavior": "dim"
+  },
+  "informationPanel": {
+    "groupByEdgeDirection": false,
+    "imageAttribute": false
+  },
+  "sigma": {
+    "drawingProperties": {
+      "defaultEdgeType": "curve",
+      "defaultHoverLabelBGColor": "#002147",
+      "defaultLabelBGColor": "#ddd",
+      "activeFontStyle": "bold",
+      "defaultLabelColor": "#000",
+      "labelThreshold": 50,
+      "defaultLabelHoverColor": "#fff",
+      "fontStyle": "bold",
+      "hoverFontStyle": "bold",
+      "defaultLabelSize": 24
+    },
+    "graphProperties": {
+      "maxEdgeSize": 5,
+      "minEdgeSize": 2,
+      "minNodeSize": 5,
+      "maxNodeSize": 35
+    },
+    "mouseProperties": {
+      "maxRatio": 20,
+      "minRatio": 0.75
+    }
+  }
+}
