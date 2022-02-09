@@ -43,9 +43,10 @@ Object.size = function(obj) {
     return size;
 };
 
+
 function onClick(event) {
     window.console.log("clicked!")
-} 
+}
 
 function initSigma(config) {
 	var data=config.data
@@ -205,6 +206,7 @@ function setupGUI(config) {
     initSigma(config);
 }
 
+
 function configSigmaElements(config) {
 	$GP=config.GP;
     
@@ -276,21 +278,75 @@ function configSigmaElements(config) {
 		});
 
     }  else if (config.features.hoverBehavior == "wtf") {
-    	//sigInst.bind('downnodes',onClick).draw();
+        var greyColor = '#444444';
+        sigInst.bind('upnodes',function(event){
+            var nodes = event.content;
+            var neighbors = {};
+            clearThis()
+            //document.getElementById('logger').innerHTML = "Üzenetek:"
+            sigInst.iterEdges(function(e){
+                if(nodes.indexOf(e.source)<0 && nodes.indexOf(e.target)<0){
+                    if(!e.attr['grey']){
+                        e.attr['true_color'] = e.color;
+                        e.color = greyColor;
+                        e.attr['grey'] = 1;
+
+                    }
+                }else{
+                    e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
+                    e.attr['grey'] = 0;
+                    //console.log(e.label);
+                    logThis(e.label);
+
+                    neighbors[e.source] = 1;
+                    neighbors[e.target] = 1;
+                }
+            }).iterNodes(function(n){
+                if(!neighbors[n.id]){
+                    if(!n.attr['grey']){
+                        n.attr['true_color'] = n.color;
+                        n.color = greyColor;
+                        n.attr['grey'] = 1
+                        n.active=0;
+                    }
+                }else{
+                    n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
+                    n.attr['grey'] = 0
+                    n.active=1;
+                }
+            }).draw(2,2,2);
+        }).bind('upnodes',function(){
+            sigInst.iterEdges(function(e){
+                //e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
+                //e.attr['grey'] = 0;
+                //console.clear()
+                //clearThis();
+                //logThis("");
+            }).iterNodes(function(n){
+                //n.active=0;
+                //n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
+                //n.attr['grey'] = 0;
+            });
+        }).draw(2,2,2);
+        //ORIGINAL
         var greyColor = '#444444';
 		sigInst.bind('overnodes',function(event){
-		var nodes = event.content;
+        var nodes = event.content;
 		var neighbors = {};
+        //clearThis()
 		sigInst.iterEdges(function(e){
 		if(nodes.indexOf(e.source)<0 && nodes.indexOf(e.target)<0){
 			if(!e.attr['grey']){
 				e.attr['true_color'] = e.color;
 				e.color = greyColor;
 				e.attr['grey'] = 1;
+
 			}
 		}else{
 			e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
 			e.attr['grey'] = 0;
+            //console.log(e.label);
+            //logThis(e.label);
 
 			neighbors[e.source] = 1;
 			neighbors[e.target] = 1;
@@ -313,10 +369,13 @@ function configSigmaElements(config) {
 		sigInst.iterEdges(function(e){
 			e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
 			e.attr['grey'] = 0;
+            //console.clear()
+            //clearThis();
+            //logThis("");
 		}).iterNodes(function(n){
-			n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
-			n.attr['grey'] = 0;
             n.active=0;
+            n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
+            n.attr['grey'] = 0;
 		});
 		}).draw(2,2,2);
 
@@ -459,6 +518,9 @@ function Cluster(a) {
         this.display = !1;
         this.list.hide();
         this.select.removeClass("close")
+        clearThis()
+        document.getElementById('logger').style.backgroundColor = 'rgba(255,255,255,0)'
+        //document.getElementById('logger').style.backgroundColor.display = 'none'
     };
     this.show = function () {
         this.display = !0;
@@ -628,7 +690,7 @@ function nodeActive(a) {
         $GP.info_data.html(e.join("<br/>"))
     }
     $GP.info_data.show();
-    $GP.info_p.html("Connections:");
+    $GP.info_p.html("Kapcsolatok:");
     $GP.info.animate({width:'show'},350);
 	$GP.info_donnees.hide();
 	$GP.info_donnees.show();
@@ -667,5 +729,45 @@ function showCluster(a) {
     }
     return !1
 }
+function logThis(message) {
+    // if we pass an Error object, message.stack will have all the details, otherwise give us a string
+    if (typeof message === 'object') {
+        message = message.stack || objToString(message);
+    }
+
+    console.log(message);
+
+
+    //insert line
+   //
+    setTimeout(() =>
+    {document.getElementById('logger').insertAdjacentHTML('afterbegin', message + '<br><br>');
+    document.getElementById('logger').style.backgroundColor = 'rgba(255,255,255,0.8)'},400)
+}
+
+function clearThis() {
+    // if we pass an Error object, message.stack will have all the details, otherwise give us a string
+
+    //insert line
+    document.getElementById('logger').innerHTML = ""
+    //document.getElementById('logger').style.backgroundColor = "black"
+}
+
+function objToString(obj) {
+    var str = 'Object: ';
+    for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+            str += p + '::' + obj[p] + ',\n';
+        }
+    }
+    return str;
+}
+
+const object1 = {
+    a: 'somestring',
+    b: 42,
+    c: false
+};
+
 
 

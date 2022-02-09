@@ -17,7 +17,7 @@
     "nodeLabel": "Intézmény/OKR"
   },
   "features": {
-    "search": true,
+    "search": false,
     "groupSelectorAttribute": false,
     "hoverBehavior": "wtf"
   },
@@ -40,10 +40,10 @@
       "drawLabels": true
     },
     "graphProperties": {
-      "maxEdgeSize": 20,
-      "minEdgeSize": 1,
+      "maxEdgeSize": 15,
+      "minEdgeSize": 1.5,
       "minNodeSize": 5,
-      "maxNodeSize": 35
+      "maxNodeSize": 30
     },
     "mouseProperties": {
       "maxRatio": 20,
