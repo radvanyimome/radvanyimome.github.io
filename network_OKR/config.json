@@ -17,7 +17,7 @@
     "nodeLabel": "Intézmény/OKR"
   },
   "features": {
-    "search": false,
+    "search": true,
     "groupSelectorAttribute": false,
     "hoverBehavior": "wtf"
   },
